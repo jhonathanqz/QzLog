@@ -2,7 +2,7 @@ name: qz_log
 description: A new Flutter package project.
 version: 0.0.1
 author: Jhonathan Queiroz <jcqueiroz.dev@gmail.com>
-homepage:
+homepage: https://github.com/jhonathanqz/QzLog
 
 environment:
   sdk: ">=2.16.2 <3.0.0"

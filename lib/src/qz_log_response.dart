@@ -25,7 +25,7 @@ class QzLog {
     }
   }
 
-  Future<List<QzLogModel>> get() async {
+  Future<List<QzLogModel>> getAllLogs() async {
     try {
       return await _repository.get();
     } catch (e) {

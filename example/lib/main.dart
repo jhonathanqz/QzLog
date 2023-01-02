@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 
 import 'package:qz_log/qz_log.dart';
@@ -33,6 +35,12 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   int _counter = 0;
 
+  final int _secondsInformation = 3;
+
+  final _infColor = Colors.amber;
+  final _errorColor = Colors.red;
+  final _sucessColor = Colors.green;
+
   void _incrementCounter() {
     setState(() {
       _counter++;
@@ -65,6 +73,18 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () async => await _deleteAll(),
               child: const Text('Delete All Logs'),
             ),
+            ElevatedButton(
+              onPressed: () async => await _deleteLogFromDatabase(),
+              child: const Text('Delete log from Database'),
+            ),
+            ElevatedButton(
+              onPressed: () async => await _deleteAllFiles(),
+              child: const Text('Delete All Files Logs'),
+            ),
+            ElevatedButton(
+              onPressed: () async => await _checkAndReuqestPermission(),
+              child: const Text('check and Request permissions'),
+            ),
           ],
         ),
       ),
@@ -78,7 +98,7 @@ class _MyHomePageState extends State<MyHomePage> {
           .insertLog(log: 'Test Log $_counter', exception: 'Function insert');
       _showSnack('insert sucess', null);
     } catch (e) {
-      print('******Error to insert log: $e');
+      log('Error to insert log: $e');
     }
   }
 
@@ -89,18 +109,22 @@ class _MyHomePageState extends State<MyHomePage> {
         _showSnack('Exists logs from external storage', null);
         return;
       }
-      _showSnack('Not exists logs from external storage', Colors.red);
+      _showSnack('Not exists logs from external storage', _errorColor);
     } catch (e) {
-      print('******Error to check log: $e');
+      log('Error to check log: $e');
     }
   }
 
   Future<void> _exportLogs() async {
     try {
-      await QzLog().exportLogs();
-      _showSnack('Export sucess', null);
+      final _response = await QzLog().exportLogs();
+      if (_response != null) {
+        return _showSnack('Export sucess', null);
+      }
+      _showSnack('Log is empty from database', _infColor);
     } catch (e) {
-      print('******Error to export log: $e');
+      log('Error to export log: $e');
+      _showSnack('Error to export logs', _errorColor);
     }
   }
 
@@ -109,7 +133,34 @@ class _MyHomePageState extends State<MyHomePage> {
       await QzLog().deleteAll();
       _showSnack('Delete all sucess', null);
     } catch (e) {
-      print('******Error to delete all logs: $e');
+      log('Error to delete all logs: $e');
+    }
+  }
+
+  Future<void> _deleteLogFromDatabase() async {
+    try {
+      await QzLog().deleteLogFromDatabase();
+      _showSnack('Delete log from database sucess', null);
+    } catch (e) {
+      log('Error to delete log from database: $e');
+    }
+  }
+
+  Future<void> _deleteAllFiles() async {
+    try {
+      await QzLog().deleteAllFiles();
+      _showSnack('Delete all files sucess', null);
+    } catch (e) {
+      log('Error to delete all files logs: $e');
+    }
+  }
+
+  Future<void> _checkAndReuqestPermission() async {
+    try {
+      await QzLog().checkAndRequestPermission();
+      _showSnack('Check and request sucess', null);
+    } catch (e) {
+      log('Error to check and request permission: $e');
     }
   }
 
@@ -120,9 +171,9 @@ class _MyHomePageState extends State<MyHomePage> {
         content: Text(
           message,
         ),
-        backgroundColor: color ?? Colors.green,
-        duration: const Duration(
-          seconds: 3,
+        backgroundColor: color ?? _sucessColor,
+        duration: Duration(
+          seconds: _secondsInformation,
         ),
       ),
     );

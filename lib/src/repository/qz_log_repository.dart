@@ -1,13 +1,13 @@
-import 'dart:io';
+import 'dart:io' as Io;
 
 import 'package:csv/csv.dart';
-import 'package:external_path/external_path.dart';
 
 import 'package:qz_log/src/database/helper/database_helper.dart';
 import 'package:qz_log/src/model/qz_log_model.dart';
+import 'package:qz_log/src/repository/ext_storage_repository.dart';
 
 class QzLogRepository {
-  Future<List<QzLogModel>> get() async {
+  Future<List<QzLogModel>> getAllLogs() async {
     try {
       final _response = await DatabaseHelper.get();
       return _response;
@@ -16,7 +16,7 @@ class QzLogRepository {
     }
   }
 
-  Future<void> insert({
+  Future<void> insertLog({
     required String log,
     String? exception,
   }) async {
@@ -34,15 +34,29 @@ class QzLogRepository {
 
   Future<void> deleteAll() async {
     try {
-      await DatabaseHelper.deleteAll();
-      final _directory = await ExternalPath.getExternalStoragePublicDirectory(
-          ExternalPath.DIRECTORY_DOWNLOADS);
-      final _rootDirectory = _directory;
-      final _appDirectory = '$_rootDirectory/QzLog';
+      await deleteLogFromDatabase();
+      await deleteAllFiles();
+    } catch (e) {
+      rethrow;
+    }
+  }
 
-      if (Directory(_appDirectory).existsSync()) {
-        Directory(_appDirectory).deleteSync(recursive: true);
+  Future<void> deleteAllFiles() async {
+    try {
+      final _appDirectory = await ExtStorageRepository.getPathFolderApp(
+          type: extPublicDir.Download, folderName: 'QzLog');
+
+      if (Io.Directory(_appDirectory).existsSync()) {
+        Io.Directory(_appDirectory).deleteSync(recursive: true);
       }
+    } catch (e) {
+      rethrow;
+    }
+  }
+
+  Future<void> deleteLogFromDatabase() async {
+    try {
+      await DatabaseHelper.deleteAll();
     } catch (e) {
       rethrow;
     }
@@ -60,15 +74,16 @@ class QzLogRepository {
     }
   }
 
-  Future<File?> exportLogs() async {
+  Future<Io.File?> exportLogs() async {
     try {
-      final _directory = await ExternalPath.getExternalStoragePublicDirectory(
-          ExternalPath.DIRECTORY_DOWNLOADS);
+      final _appDirectory =
+          await ExtStorageRepository.createFolderInPublicDirectory(
+              type: extPublicDir.Download, folderName: 'QzLog');
 
       final _headers = [];
       final _listOfCollects = <List<dynamic>>[_headers];
 
-      final _response = await get();
+      final _response = await getAllLogs();
       String _lastNow = '';
 
       if (_response.isNotEmpty) {
@@ -81,27 +96,25 @@ class QzLogRepository {
           _lastNow = e.createdAt ?? DateTime.now().toString();
         });
 
-        final csv = const ListToCsvConverter().convert(_listOfCollects);
+        final _csv = const ListToCsvConverter().convert(_listOfCollects);
 
-        final _rootDirectory = _directory;
-        final _appDirectory = '$_rootDirectory/QzLog';
-
-        if (!Directory(_appDirectory).existsSync()) {
-          Directory(_appDirectory).createSync();
+        if (!Io.Directory(_appDirectory).existsSync()) {
+          Io.Directory(_appDirectory).createSync(recursive: true);
         }
 
-        final _newDirectory = Directory(_appDirectory).path;
+        final _newDirectory = _appDirectory;
 
         final _fileName = 'QzLog_$_lastNow';
-        final file = File('$_newDirectory/$_fileName.txt');
-        if (file.existsSync()) {
-          file.deleteSync();
+        final _file = Io.File('$_newDirectory/$_fileName.txt');
+        if (_file.existsSync()) {
+          _file.deleteSync();
         }
-        await file.writeAsString(csv);
-        return file;
+        await _file.writeAsString(_csv);
+        return _file;
       }
     } catch (e) {
       rethrow;
     }
+    return null;
   }
 }

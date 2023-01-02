@@ -44,7 +44,7 @@ import 'package:qz_log/qz_log.dart';
 
 ```
 await QzLog()
-          .insert(log: 'Test Log', exception: 'Function insert');
+          .insertLog(log: 'Test Log', exception: 'Function insert');
 ```
 
 - To check if there are Logs recorded in the database, just use the logExists function.
@@ -65,10 +65,28 @@ await QzLog().exportLogs();
 await QzLog().deleteAll();
 ```
 
+- To delete only the exported files in the device's storage, just use the deleteAllFiles function.
+
+```
+await QzLog().deleteAllFiles();
+```
+
+- To delete only the log records stored in the database and keep the exported files, just use the deleteLogFromDatabase function.
+
+```
+await QzLog().deleteLogFromDatabase();
+```
+
+- To check and request storage permissions, just use the checkAndRequestPermission function..
+
+```
+await QzLog().checkAndRequestPermission();
+```
+
 ## :sparkles: Documentation ##
 <a href="https://github.com/jhonathanqz" target="_blank">
 Access documentation</a>
 <br>
 <br>
-Feito por: Jhonathan Queiroz
+Made by: Jhonathan Queiroz
 

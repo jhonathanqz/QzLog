@@ -1,3 +1,11 @@
+## 1.0.2 - Fix performance and documentation
+
+* TODO: Configure static functions and detailed documentation.
+
+## 1.0.1 - Fix performance
+
+* TODO: Configure static functions.
+
 ## 1.0.0 - Initial release
 
 * TODO: Add check permission and refactor external storage.

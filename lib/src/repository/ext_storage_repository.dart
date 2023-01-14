@@ -1,9 +1,12 @@
+// ignore_for_file: constant_identifier_names, library_prefixes
+
 import 'dart:io';
 
 import 'package:path/path.dart' as Path;
 import 'package:path_provider/path_provider.dart';
 
-enum extPublicDir {
+//Enum to map device public directories.
+enum ExtPublicDir {
   Music,
   PodCasts,
   Ringtones,
@@ -18,6 +21,9 @@ enum extPublicDir {
   Audiobooks,
 }
 
+//Class responsible for controlling the logic and construction of the fields,
+//and finally calling the communication with the database,
+//passing the processed data as a parameter.
 class ExtStorageRepository {
   static Future<String> get _getExtStoragePath async {
     var directory = await getExternalStorageDirectory();
@@ -31,11 +37,11 @@ class ExtStorageRepository {
   /* Create or not a folder within the public directory, and return its full path */
 
   static Future<String> createFolderInPublicDirectory({
-    required extPublicDir type,
+    required ExtPublicDir type,
     required String folderName,
   }) async {
     var _appDocDir = await _getExtStoragePath;
-
+    //Get Application Directory
     _appDocDir = await getPathFolderApp(type: type, folderName: folderName);
 
     if (await Directory(_appDocDir).exists()) {
@@ -45,13 +51,14 @@ class ExtStorageRepository {
       final _appDocDirNewFolder =
           await Directory(_appDocDir).create(recursive: true);
       final pathNorma = Path.normalize(_appDocDirNewFolder.path);
-
+      //Returns full directory of created folder
       return pathNorma;
     }
   }
 
+  //Function responsible for getting the application directory
   static Future<String> getPathFolderApp({
-    required extPublicDir type,
+    required ExtPublicDir type,
     required String folderName,
   }) async {
     var _appDocDir = await _getExtStoragePath;

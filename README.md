@@ -43,44 +43,43 @@ import 'package:qz_log/qz_log.dart';
 - To insert or record a Log record, use the insertLog function;
 
 ```
-await QzLog()
-          .insertLog(log: 'Test Log', exception: 'Function insert');
+await QzLog.insertLog(log: 'Test Log', exception: 'Function insert');
 ```
 
 - To check if there are Logs recorded in the database, just use the logExists function.
 
 ```
-await QzLog().logExists();
+await QzLog.logExists();
 ```
 
 - To export the Log file, just use the exportLogs function. The file will be saved inside the Downloads/QzLog folder.
 
 ```
-await QzLog().exportLogs();
+await QzLog.exportLogs();
 ```
 
 - To delete all Log records in the database and also the generated files, just use the deleteAll function.
 
 ```
-await QzLog().deleteAll();
+await QzLog.deleteAll();
 ```
 
 - To delete only the exported files in the device's storage, just use the deleteAllFiles function.
 
 ```
-await QzLog().deleteAllFiles();
+await QzLog.deleteAllFiles();
 ```
 
 - To delete only the log records stored in the database and keep the exported files, just use the deleteLogFromDatabase function.
 
 ```
-await QzLog().deleteLogFromDatabase();
+await QzLog.deleteLogFromDatabase();
 ```
 
 - To check and request storage permissions, just use the checkAndRequestPermission function..
 
 ```
-await QzLog().checkAndRequestPermission();
+await QzLog.checkAndRequestPermission();
 ```
 
 ## :sparkles: Documentation ##

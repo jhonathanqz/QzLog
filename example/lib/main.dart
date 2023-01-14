@@ -94,8 +94,8 @@ class _MyHomePageState extends State<MyHomePage> {
   Future<void> _insertLog() async {
     try {
       _incrementCounter();
-      await QzLog()
-          .insertLog(log: 'Test Log $_counter', exception: 'Function insert');
+      await QzLog.insertLog(
+          log: 'Test Log $_counter', exception: 'Function insert');
       _showSnack('insert sucess', null);
     } catch (e) {
       log('Error to insert log: $e');
@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _checkLogExists() async {
     try {
-      final _response = await QzLog().logExists();
+      final _response = await QzLog.logExists();
       if (_response) {
         _showSnack('Exists logs from external storage', null);
         return;
@@ -117,7 +117,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _exportLogs() async {
     try {
-      final _response = await QzLog().exportLogs();
+      final _response = await QzLog.exportLogs();
       if (_response != null) {
         return _showSnack('Export sucess', null);
       }
@@ -130,7 +130,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _deleteAll() async {
     try {
-      await QzLog().deleteAll();
+      await QzLog.deleteAll();
       _showSnack('Delete all sucess', null);
     } catch (e) {
       log('Error to delete all logs: $e');
@@ -139,7 +139,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _deleteLogFromDatabase() async {
     try {
-      await QzLog().deleteLogFromDatabase();
+      await QzLog.deleteLogFromDatabase();
       _showSnack('Delete log from database sucess', null);
     } catch (e) {
       log('Error to delete log from database: $e');
@@ -148,7 +148,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _deleteAllFiles() async {
     try {
-      await QzLog().deleteAllFiles();
+      await QzLog.deleteAllFiles();
       _showSnack('Delete all files sucess', null);
     } catch (e) {
       log('Error to delete all files logs: $e');
@@ -157,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   Future<void> _checkAndReuqestPermission() async {
     try {
-      await QzLog().checkAndRequestPermission();
+      await QzLog.checkAndRequestPermission();
       _showSnack('Check and request sucess', null);
     } catch (e) {
       log('Error to check and request permission: $e');

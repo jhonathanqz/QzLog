@@ -1,6 +1,8 @@
 import 'package:permission_handler/permission_handler.dart';
 
+//Class responsible for managing the necessary permissions to control file storage
 class PermissionRepository {
+  //Check and if necessary obtain device storage permissions.
   static Future<void> checkAndRequestPermission() async {
     try {
       final _statusStorage = await Permission.storage.status; //isDenied
@@ -17,6 +19,7 @@ class PermissionRepository {
     }
   }
 
+  //Check and if storage permissions are allowed
   static Future<bool> isPermissonsGranted() async {
     bool aux = true;
     try {

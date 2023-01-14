@@ -4,38 +4,42 @@ import 'package:qz_log/src/model/qz_log_model.dart';
 import 'package:qz_log/src/repository/permission_repository.dart';
 import 'package:qz_log/src/repository/qz_log_repository.dart';
 
+//Class responsible only for controlling user calls
 class QzLog {
-  final _repository = QzLogRepository();
-  Future<void> deleteAll() async {
+  //Function to erase all log records in the database and exported files.
+  static Future<void> deleteAll() async {
     try {
-      await _repository.deleteAll();
+      await QzLogRepository.deleteAll();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> deleteLogFromDatabase() async {
+  //Function to delete all logs stored in the database.
+  static Future<void> deleteLogFromDatabase() async {
     try {
-      await _repository.deleteLogFromDatabase();
+      await QzLogRepository.deleteLogFromDatabase();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> deleteAllFiles() async {
+  //Function to erase all exported files in the external memory of the device.
+  static Future<void> deleteAllFiles() async {
     try {
-      await _repository.deleteAllFiles();
+      await QzLogRepository.deleteAllFiles();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> insertLog({
+  //Function to insert a new record in the database.
+  static Future<void> insertLog({
     required String log,
     String? exception,
   }) async {
     try {
-      await _repository.insertLog(
+      await QzLogRepository.insertLog(
         log: log,
         exception: exception,
       );
@@ -44,31 +48,35 @@ class QzLog {
     }
   }
 
-  Future<List<QzLogModel>> getAllLogs() async {
+  //Function to obtain a list of all logs recorded in the database.
+  static Future<List<QzLogModel>> getAllLogs() async {
     try {
-      return await _repository.getAllLogs();
+      return await QzLogRepository.getAllLogs();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<bool> logExists() async {
+  //Function to check if there is any log recorded in the database.
+  static Future<bool> logExists() async {
     try {
-      return await _repository.logExists();
+      return await QzLogRepository.logExists();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<File?> exportLogs() async {
+  //Function to export the logs to a file on the device's external storage.
+  static Future<File?> exportLogs() async {
     try {
-      return await _repository.exportLogs();
+      return await QzLogRepository.exportLogs();
     } catch (e) {
       rethrow;
     }
   }
 
-  Future<void> checkAndRequestPermission() async {
+  //Check and if necessary obtain device storage permissions.
+  static Future<void> checkAndRequestPermission() async {
     try {
       return await PermissionRepository.checkAndRequestPermission();
     } catch (e) {

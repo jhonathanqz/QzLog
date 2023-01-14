@@ -1,3 +1,4 @@
+//Model class to map database fields.
 class QzLogModel {
   final int? id;
   final String? createdAt;

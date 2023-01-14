@@ -1,3 +1,7 @@
+## 1.0.3+1 - Fix License
+
+* TODO: Fix license documentation
+
 ## 1.0.3 - Add License
 
 * TODO: Insert license documentation

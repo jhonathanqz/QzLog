@@ -1,4 +1,4 @@
-## 1.0.3+1 - Fix License
+## 1.0.4 - Fix License
 
 * TODO: Fix license documentation
 

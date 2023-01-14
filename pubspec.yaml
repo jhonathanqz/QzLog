@@ -1,6 +1,6 @@
 name: qz_log
 description: Package to manage Logs in Flutter, allowing you to record information and export it to a file.
-version: 1.0.2
+version: 1.0.3
 homepage: https://github.com/jhonathanqz/QzLog
 
 environment:

@@ -1,15 +1,18 @@
 <div align="center" id="top"> 
   <img src="./.github/app.gif" alt="Qz_log" />
 
-  &#xa0;
+&#xa0;
 
 </div>
 
 <h1 align="center">QzLog</h1>
 
-
-
 <br>
+<a href="https://buymeacoffee.com/jhonathanqr" target="_blank">
+  <img src="https://www.buymeacoffee.com/assets/img/custom_images/orange_img.png" alt="Buy Me A Book" style="height: 41px !important;width: 174px !important;box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;-webkit-box-shadow: 0px 3px 2px 0px rgba(190, 190, 190, 0.5) !important;">
+</a>
+
+[![Github Badge](https://img.shields.io/badge/GitHub-100000?style=for-the-badge&logo=github&logoColor=white&link=https://github.com/jhonathanqz)](https://github.com/jhonathanqz)
 
 Before using the QzLog package, it is necessary to configure the following permissions in androidManifest.xml:
 
@@ -30,8 +33,7 @@ And still in androidManifest, inside the application tag, include the following 
         android:requestLegacyExternalStorage="true"
 ```
 
-
-## :dart: How to use it? ##
+## :dart: How to use it?
 
 - Firstly, add QzLog as a dependency in your pubspec.yaml file.
 - And import this as in your dart file:
@@ -82,10 +84,10 @@ await QzLog.deleteLogFromDatabase();
 await QzLog.checkAndRequestPermission();
 ```
 
-## :sparkles: Documentation ##
+## :sparkles: Documentation
+
 <a href="https://github.com/jhonathanqz" target="_blank">
 Access documentation</a>
 <br>
 <br>
 Made by: Jhonathan Queiroz
-
